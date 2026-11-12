@@ -15,7 +15,7 @@ export const CATEGORIES: Record<string, LucideIcon> = {
   Filhos: Baby,
   Dívidas: CreditCard,
   Salário: Briefcase,
-  Renda extra: Wallet,
+  "Renda extra": Wallet,
   Sonho: Target,
 };
 export const EXPENSE_CATEGORIES = ["Alimentação","Transporte","Moradia","Contas","Lazer","Saúde","Educação","Compras","Filhos","Dívidas"];
