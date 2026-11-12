@@ -13,8 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as MainRouteImport } from './routes/_main'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as MainIaRouteImport } from './routes/_main.ia'
 import { Route as MainInicioRouteImport } from './routes/_main.inicio'
 import { Route as MainNovaRouteImport } from './routes/_main.nova'
+import { Route as MainPerfilRouteImport } from './routes/_main.perfil'
+import { Route as MainSonhosRouteImport } from './routes/_main.sonhos'
 import { Route as MainMovimentacoesIndexRouteImport } from './routes/_main.movimentacoes.index'
 import { Route as MainMovimentacoesIdRouteImport } from './routes/_main.movimentacoes.$id'
 
@@ -37,6 +40,11 @@ const OnboardingRoute = OnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MainIaRoute = MainIaRouteImport.update({
+  id: '/ia',
+  path: '/ia',
+  getParentRoute: () => MainRoute,
+} as any)
 const MainInicioRoute = MainInicioRouteImport.update({
   id: '/inicio',
   path: '/inicio',
@@ -45,6 +53,16 @@ const MainInicioRoute = MainInicioRouteImport.update({
 const MainNovaRoute = MainNovaRouteImport.update({
   id: '/nova',
   path: '/nova',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainPerfilRoute = MainPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainSonhosRoute = MainSonhosRouteImport.update({
+  id: '/sonhos',
+  path: '/sonhos',
   getParentRoute: () => MainRoute,
 } as any)
 const MainMovimentacoesIndexRoute = MainMovimentacoesIndexRouteImport.update({
@@ -62,8 +80,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/ia': typeof MainIaRoute
   '/inicio': typeof MainInicioRoute
   '/nova': typeof MainNovaRoute
+  '/perfil': typeof MainPerfilRoute
+  '/sonhos': typeof MainSonhosRoute
   '/movimentacoes/$id': typeof MainMovimentacoesIdRoute
   '/movimentacoes/': typeof MainMovimentacoesIndexRoute
 }
@@ -71,8 +92,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/ia': typeof MainIaRoute
   '/inicio': typeof MainInicioRoute
   '/nova': typeof MainNovaRoute
+  '/perfil': typeof MainPerfilRoute
+  '/sonhos': typeof MainSonhosRoute
   '/movimentacoes/$id': typeof MainMovimentacoesIdRoute
   '/movimentacoes': typeof MainMovimentacoesIndexRoute
 }
@@ -82,8 +106,11 @@ export interface FileRoutesById {
   '/_main': typeof MainRouteWithChildren
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
+  '/_main/ia': typeof MainIaRoute
   '/_main/inicio': typeof MainInicioRoute
   '/_main/nova': typeof MainNovaRoute
+  '/_main/perfil': typeof MainPerfilRoute
+  '/_main/sonhos': typeof MainSonhosRoute
   '/_main/movimentacoes/$id': typeof MainMovimentacoesIdRoute
   '/_main/movimentacoes/': typeof MainMovimentacoesIndexRoute
 }
@@ -93,8 +120,11 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/onboarding'
+    | '/ia'
     | '/inicio'
     | '/nova'
+    | '/perfil'
+    | '/sonhos'
     | '/movimentacoes/$id'
     | '/movimentacoes/'
   fileRoutesByTo: FileRoutesByTo
@@ -102,8 +132,11 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/onboarding'
+    | '/ia'
     | '/inicio'
     | '/nova'
+    | '/perfil'
+    | '/sonhos'
     | '/movimentacoes/$id'
     | '/movimentacoes'
   id:
@@ -112,8 +145,11 @@ export interface FileRouteTypes {
     | '/_main'
     | '/login'
     | '/onboarding'
+    | '/_main/ia'
     | '/_main/inicio'
     | '/_main/nova'
+    | '/_main/perfil'
+    | '/_main/sonhos'
     | '/_main/movimentacoes/$id'
     | '/_main/movimentacoes/'
   fileRoutesById: FileRoutesById
@@ -155,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_main/ia': {
+      id: '/_main/ia'
+      path: '/ia'
+      fullPath: '/ia'
+      preLoaderRoute: typeof MainIaRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/_main/inicio': {
       id: '/_main/inicio'
       path: '/inicio'
@@ -167,6 +210,20 @@ declare module '@tanstack/react-router' {
       path: '/nova'
       fullPath: '/nova'
       preLoaderRoute: typeof MainNovaRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/perfil': {
+      id: '/_main/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof MainPerfilRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/sonhos': {
+      id: '/_main/sonhos'
+      path: '/sonhos'
+      fullPath: '/sonhos'
+      preLoaderRoute: typeof MainSonhosRouteImport
       parentRoute: typeof MainRoute
     }
     '/_main/movimentacoes/': {
@@ -187,15 +244,21 @@ declare module '@tanstack/react-router' {
 }
 
 interface MainRouteChildren {
+  MainIaRoute: typeof MainIaRoute
   MainInicioRoute: typeof MainInicioRoute
   MainNovaRoute: typeof MainNovaRoute
+  MainPerfilRoute: typeof MainPerfilRoute
+  MainSonhosRoute: typeof MainSonhosRoute
   MainMovimentacoesIdRoute: typeof MainMovimentacoesIdRoute
   MainMovimentacoesIndexRoute: typeof MainMovimentacoesIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
+  MainIaRoute: MainIaRoute,
   MainInicioRoute: MainInicioRoute,
   MainNovaRoute: MainNovaRoute,
+  MainPerfilRoute: MainPerfilRoute,
+  MainSonhosRoute: MainSonhosRoute,
   MainMovimentacoesIdRoute: MainMovimentacoesIdRoute,
   MainMovimentacoesIndexRoute: MainMovimentacoesIndexRoute,
 }

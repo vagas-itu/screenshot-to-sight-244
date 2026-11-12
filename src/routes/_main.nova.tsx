@@ -25,9 +25,9 @@ function NewTx() {
   const [type, setType] = useState<TxType>("expense");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState(EXPENSE_CATEGORIES[0]);
+  const [category, setCategory] = useState<string>(EXPENSE_CATEGORIES[0]!);
   const [date, setDate] = useState(today());
-  const [account, setAccount] = useState(persona.accounts[0]);
+  const [account, setAccount] = useState<string>(persona.accounts[0] ?? "");
   const [note, setNote] = useState("");
   const [savedId, setSavedId] = useState("");
   const value = parseFloat(amount.replace(",", ".")) || 0;
@@ -40,13 +40,13 @@ function NewTx() {
   ];
   const pickType = (k: TxType) => {
     setType(k);
-    setCategory(k === "income" ? INCOME_CATEGORIES[0] : k === "dream" ? "Sonho" : EXPENSE_CATEGORIES[0]);
+    setCategory(k === "income" ? INCOME_CATEGORIES[0]! : k === "dream" ? "Sonho" : EXPENSE_CATEGORIES[0]!);
     if (k === "dream" && j) setDescription(`Guardar para ${j.dream}`);
   };
 
   const confirm = () => {
     const now = new Date();
-    const [y, m, d] = date.split("-").map(Number);
+    const [y = 2026, m = 1, d = 1] = date.split("-").map(Number);
     const iso = new Date(y, m - 1, d, now.getHours(), now.getMinutes()).toISOString();
     const t = addTransaction({ type, description: description.trim(), amount: value, category, date: iso, account, note: note.trim() || undefined });
     setSavedId(t.id);
@@ -105,7 +105,7 @@ function NewTx() {
 
       {type === "dream" && !j && (
         <div className="rounded-2xl border border-reward/30 bg-reward/10 p-4 text-sm">
-          Você ainda não tem uma jornada ativa. <Link to="/ia" search={{ start: "dream" }} className="font-semibold text-reward underline">Crie seu sonho com o Tokeni</Link> para começar a guardar.
+          Você ainda não tem uma jornada ativa. <Link to="/ia" className="font-semibold text-reward underline">Crie seu sonho com o Tokeni</Link> para começar a guardar.
         </div>
       )}
 

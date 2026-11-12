@@ -31,7 +31,7 @@ function Onboarding() {
   const { finishOnboarding } = useApp();
   const navigate = useNavigate();
   const done = () => { finishOnboarding(); navigate({ to: "/login" }); };
-  const s = SLIDES[i];
+  const s = SLIDES[i]!;
   const last = i === SLIDES.length - 1;
 
   return (
