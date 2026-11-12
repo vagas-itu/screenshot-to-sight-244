@@ -61,6 +61,7 @@ export interface Conversation {
   id: string;
   title: string;
   messages: ChatMessage[];
+  flow?: DreamFlow;
 }
 
 export interface FinancialProfile {
@@ -92,4 +93,12 @@ export interface PersonaInfo {
   bio: string;
   accounts: string[];
   dreamHint: string;
+}
+
+export interface DreamFlow {
+  step: "goal" | "cost" | "deadline" | "obstacles" | "proposed" | "done";
+  dream?: string;
+  cost?: number;
+  months?: number;
+  obstacles?: string;
 }
