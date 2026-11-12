@@ -175,7 +175,7 @@ function Dashboard() {
                 <p className="text-xs text-muted-foreground">Sonhos</p>
                 <p className="mt-1 font-display text-lg font-semibold">Qual é o seu próximo sonho?</p>
                 <p className="mt-1 text-sm text-muted-foreground">Ex.: {persona.dreamHint.toLowerCase()}.</p>
-                <Link to="/ia" search={{ start: "dream" }} className={cn(btn({ variant: "reward", size: "sm" }), "mt-4 w-full")}>Criar minha jornada</Link>
+                <Link to="/ia" className={cn(btn({ variant: "reward", size: "sm" }), "mt-4 w-full")}>Criar minha jornada</Link>
               </>
             )}
           </Card>

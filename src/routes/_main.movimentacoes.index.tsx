@@ -73,8 +73,8 @@ function History() {
             </div>
           )}
           {groups.map((g) => (
-            <section key={g[0].date} className="card-surface p-3">
-              <p className="px-2 pb-1 pt-1 text-xs font-semibold capitalize text-muted-foreground">{fmtDayLabel(g[0].date)}</p>
+            <section key={g[0]!.date} className="card-surface p-3">
+              <p className="px-2 pb-1 pt-1 text-xs font-semibold capitalize text-muted-foreground">{fmtDayLabel(g[0]!.date)}</p>
               {g.map((t) => <TxRow key={t.id} t={t} hide={state.hideValues} />)}
             </section>
           ))}

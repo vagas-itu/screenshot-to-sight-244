@@ -74,7 +74,7 @@ export function buildJourney(dream: string, target: number, months: number, hasD
     saved: 0,
     months,
     createdAt: new Date().toISOString(),
-    levels: LEVEL_NAMES.map((name, i) => ({ name, description: descriptions[i], missionId: `m${i + 1}` })),
+    levels: LEVEL_NAMES.map((name, i) => ({ name, description: descriptions[i] ?? "", missionId: `m${i + 1}` })),
     missions,
   };
 }

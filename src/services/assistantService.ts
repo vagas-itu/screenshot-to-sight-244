@@ -19,14 +19,14 @@ export interface AssistantReply {
 const parseMoney = (s: string) => {
   const m = s.replace(/\./g, "").replace(",", ".").match(/(\d+(?:\.\d+)?)\s*(mil|k)?/i);
   if (!m) return undefined;
-  let v = parseFloat(m[1]);
+  let v = parseFloat(m[1] ?? "0");
   if (m[2]) v *= 1000;
   return v;
 };
 const parseMonths = (s: string) => {
   const m = s.match(/(\d+)\s*(ano|anos|mes|mês|meses)?/i);
   if (!m) return undefined;
-  const n = parseInt(m[1]);
+  const n = parseInt(m[1] ?? "0");
   return m[2]?.toLowerCase().startsWith("ano") ? n * 12 : n;
 };
 
