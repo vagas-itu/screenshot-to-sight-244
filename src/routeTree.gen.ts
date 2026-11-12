@@ -14,6 +14,8 @@ import { Route as MainRouteImport } from './routes/_main'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as MainInicioRouteImport } from './routes/_main.inicio'
+import { Route as MainMovimentacoesIndexRouteImport } from './routes/_main.movimentacoes.index'
+import { Route as MainMovimentacoesIdRouteImport } from './routes/_main.movimentacoes.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -39,18 +41,32 @@ const MainInicioRoute = MainInicioRouteImport.update({
   path: '/inicio',
   getParentRoute: () => MainRoute,
 } as any)
+const MainMovimentacoesIndexRoute = MainMovimentacoesIndexRouteImport.update({
+  id: '/movimentacoes/',
+  path: '/movimentacoes/',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainMovimentacoesIdRoute = MainMovimentacoesIdRouteImport.update({
+  id: '/movimentacoes/$id',
+  path: '/movimentacoes/$id',
+  getParentRoute: () => MainRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/inicio': typeof MainInicioRoute
+  '/movimentacoes/$id': typeof MainMovimentacoesIdRoute
+  '/movimentacoes/': typeof MainMovimentacoesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/inicio': typeof MainInicioRoute
+  '/movimentacoes/$id': typeof MainMovimentacoesIdRoute
+  '/movimentacoes': typeof MainMovimentacoesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,13 +75,35 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/_main/inicio': typeof MainInicioRoute
+  '/_main/movimentacoes/$id': typeof MainMovimentacoesIdRoute
+  '/_main/movimentacoes/': typeof MainMovimentacoesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/onboarding' | '/inicio'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/onboarding'
+    | '/inicio'
+    | '/movimentacoes/$id'
+    | '/movimentacoes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/onboarding' | '/inicio'
-  id: '__root__' | '/' | '/_main' | '/login' | '/onboarding' | '/_main/inicio'
+  to:
+    | '/'
+    | '/login'
+    | '/onboarding'
+    | '/inicio'
+    | '/movimentacoes/$id'
+    | '/movimentacoes'
+  id:
+    | '__root__'
+    | '/'
+    | '/_main'
+    | '/login'
+    | '/onboarding'
+    | '/_main/inicio'
+    | '/_main/movimentacoes/$id'
+    | '/_main/movimentacoes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -112,15 +150,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainInicioRouteImport
       parentRoute: typeof MainRoute
     }
+    '/_main/movimentacoes/': {
+      id: '/_main/movimentacoes/'
+      path: '/movimentacoes'
+      fullPath: '/movimentacoes/'
+      preLoaderRoute: typeof MainMovimentacoesIndexRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/movimentacoes/$id': {
+      id: '/_main/movimentacoes/$id'
+      path: '/movimentacoes/$id'
+      fullPath: '/movimentacoes/$id'
+      preLoaderRoute: typeof MainMovimentacoesIdRouteImport
+      parentRoute: typeof MainRoute
+    }
   }
 }
 
 interface MainRouteChildren {
   MainInicioRoute: typeof MainInicioRoute
+  MainMovimentacoesIdRoute: typeof MainMovimentacoesIdRoute
+  MainMovimentacoesIndexRoute: typeof MainMovimentacoesIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
   MainInicioRoute: MainInicioRoute,
+  MainMovimentacoesIdRoute: MainMovimentacoesIdRoute,
+  MainMovimentacoesIndexRoute: MainMovimentacoesIndexRoute,
 }
 
 const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
