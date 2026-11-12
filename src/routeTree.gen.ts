@@ -10,33 +10,119 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MainRouteImport } from './routes/_main'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as MainInicioRouteImport } from './routes/_main.inicio'
+import { Route as MainNovaRouteImport } from './routes/_main.nova'
+import { Route as MainMovimentacoesIndexRouteImport } from './routes/_main.movimentacoes.index'
+import { Route as MainMovimentacoesIdRouteImport } from './routes/_main.movimentacoes.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MainRoute = MainRouteImport.update({
+  id: '/_main',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MainInicioRoute = MainInicioRouteImport.update({
+  id: '/inicio',
+  path: '/inicio',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainNovaRoute = MainNovaRouteImport.update({
+  id: '/nova',
+  path: '/nova',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainMovimentacoesIndexRoute = MainMovimentacoesIndexRouteImport.update({
+  id: '/movimentacoes/',
+  path: '/movimentacoes/',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainMovimentacoesIdRoute = MainMovimentacoesIdRouteImport.update({
+  id: '/movimentacoes/$id',
+  path: '/movimentacoes/$id',
+  getParentRoute: () => MainRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/inicio': typeof MainInicioRoute
+  '/nova': typeof MainNovaRoute
+  '/movimentacoes/$id': typeof MainMovimentacoesIdRoute
+  '/movimentacoes/': typeof MainMovimentacoesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/inicio': typeof MainInicioRoute
+  '/nova': typeof MainNovaRoute
+  '/movimentacoes/$id': typeof MainMovimentacoesIdRoute
+  '/movimentacoes': typeof MainMovimentacoesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_main': typeof MainRouteWithChildren
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/_main/inicio': typeof MainInicioRoute
+  '/_main/nova': typeof MainNovaRoute
+  '/_main/movimentacoes/$id': typeof MainMovimentacoesIdRoute
+  '/_main/movimentacoes/': typeof MainMovimentacoesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/onboarding'
+    | '/inicio'
+    | '/nova'
+    | '/movimentacoes/$id'
+    | '/movimentacoes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/onboarding'
+    | '/inicio'
+    | '/nova'
+    | '/movimentacoes/$id'
+    | '/movimentacoes'
+  id:
+    | '__root__'
+    | '/'
+    | '/_main'
+    | '/login'
+    | '/onboarding'
+    | '/_main/inicio'
+    | '/_main/nova'
+    | '/_main/movimentacoes/$id'
+    | '/_main/movimentacoes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MainRoute: typeof MainRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  OnboardingRoute: typeof OnboardingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +134,79 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_main': {
+      id: '/_main'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof MainRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_main/inicio': {
+      id: '/_main/inicio'
+      path: '/inicio'
+      fullPath: '/inicio'
+      preLoaderRoute: typeof MainInicioRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/nova': {
+      id: '/_main/nova'
+      path: '/nova'
+      fullPath: '/nova'
+      preLoaderRoute: typeof MainNovaRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/movimentacoes/': {
+      id: '/_main/movimentacoes/'
+      path: '/movimentacoes'
+      fullPath: '/movimentacoes/'
+      preLoaderRoute: typeof MainMovimentacoesIndexRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/movimentacoes/$id': {
+      id: '/_main/movimentacoes/$id'
+      path: '/movimentacoes/$id'
+      fullPath: '/movimentacoes/$id'
+      preLoaderRoute: typeof MainMovimentacoesIdRouteImport
+      parentRoute: typeof MainRoute
+    }
   }
 }
 
+interface MainRouteChildren {
+  MainInicioRoute: typeof MainInicioRoute
+  MainNovaRoute: typeof MainNovaRoute
+  MainMovimentacoesIdRoute: typeof MainMovimentacoesIdRoute
+  MainMovimentacoesIndexRoute: typeof MainMovimentacoesIndexRoute
+}
+
+const MainRouteChildren: MainRouteChildren = {
+  MainInicioRoute: MainInicioRoute,
+  MainNovaRoute: MainNovaRoute,
+  MainMovimentacoesIdRoute: MainMovimentacoesIdRoute,
+  MainMovimentacoesIndexRoute: MainMovimentacoesIndexRoute,
+}
+
+const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MainRoute: MainRouteWithChildren,
+  LoginRoute: LoginRoute,
+  OnboardingRoute: OnboardingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
