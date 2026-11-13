@@ -149,6 +149,42 @@
 @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 50%, transparent);} 100% { box-shadow: 0 0 0 22px transparent; } }
 @keyframes dot { 0%, 80%, 100% { opacity: .25 } 40% { opacity: 1 } }
 
+/* Idle Game pixel-art animations */
+@keyframes idle-sway {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+@keyframes idle-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes idle-smoke {
+  0% { transform: translateY(0) translateX(0); opacity: .7; }
+  50% { transform: translateY(-8px) translateX(2px); opacity: .4; }
+  100% { transform: translateY(-16px) translateX(-2px); opacity: 0; }
+}
+@keyframes idle-celebrate {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+@keyframes idle-jump {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-8px) scale(1.05); }
+}
+@keyframes scene-flash {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.idle-sway { animation: idle-sway 3s ease-in-out infinite; transform-origin: bottom center; }
+.idle-bounce { animation: idle-bounce 2s ease-in-out infinite; }
+.idle-smoke { animation: idle-smoke 2.5s ease-out infinite; }
+.idle-celebrate { animation: idle-celebrate 1s ease-in-out infinite; }
+.idle-jump { animation: idle-jump 1.2s cubic-bezier(.2,.7,.2,1) infinite; }
+.idle-rise { animation: rise .6s cubic-bezier(.2,.7,.2,1) both; }
+.animate-scene-flash { animation: scene-flash .8s ease-out forwards; }
+
 @utility animate-rise { animation: rise .45s cubic-bezier(.2,.7,.2,1) both; }
 @utility animate-grow { transform-origin: left; animation: grow .9s cubic-bezier(.2,.7,.2,1) both; }
 @utility animate-pop { animation: pop .5s cubic-bezier(.2,.7,.2,1) both; }

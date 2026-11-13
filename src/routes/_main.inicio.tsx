@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Bell, Eye, EyeOff, Plus, Sparkles, ArrowDownLeft, ArrowUpRight, AlertTriangle, Target, ChevronRight, X } from "lucide-react";
+import { Bell, Eye, EyeOff, Plus, Sparkles, ArrowDownLeft, ArrowUpRight, AlertTriangle, Target, ChevronRight, X, PlusCircle, History, MessageCircle } from "lucide-react";
 import { Avatar, Card, Progress, SectionTitle, TxRow, btn, SimulationBadge } from "@/components/cards/kit";
 import { useSession } from "@/contexts/AppContext";
 import { budgetRows, financialProgress, spendingByCategory, summary } from "@/services/finance";
@@ -12,6 +12,13 @@ export const Route = createFileRoute("/_main/inicio")({
   head: pageHead("Início", "Seu saldo, orçamento, insights do Tokeni e seu sonho em destaque."),
   component: Dashboard,
 });
+
+const QUICK_ACTIONS = [
+  { to: "/nova", label: "Registrar", Icon: PlusCircle, color: "text-primary" },
+  { to: "/movimentacoes", label: "Histórico", Icon: History, color: "text-ai" },
+  { to: "/ia", label: "Tokeni IA", Icon: MessageCircle, color: "text-ai" },
+  { to: "/sonhos", label: "Sonhos", Icon: Target, color: "text-reward" },
+] as const;
 
 function Dashboard() {
   const { persona, state, update } = useSession();
@@ -45,7 +52,7 @@ function Dashboard() {
           {bell && (
             <div className="absolute right-0 top-14 z-30 w-80 animate-rise card-surface p-4">
               <div className="mb-2 flex items-center justify-between"><p className="font-semibold">Notificações</p><button onClick={() => setBell(false)} aria-label="Fechar"><X className="h-4 w-4" /></button></div>
-              {alerts.length === 0 ? <p className="text-sm text-muted-foreground">Tudo em dia por aqui. 🌱</p> : alerts.map((a) => (
+              {alerts.length === 0 ? <p className="text-sm text-muted-foreground">Tudo em dia por aqui.</p> : alerts.map((a) => (
                 <p key={a.category} className="border-t border-border py-2 text-sm first:border-0">
                   <span className={a.status === "over" ? "text-negative" : "text-warning"}>●</span> {a.category}: {Math.round(a.pct * 100)}% do limite usado.
                 </p>
@@ -61,6 +68,7 @@ function Dashboard() {
           <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-brand-gradient p-6 shadow-glow">
             <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full border border-primary/20" />
             <div className="pointer-events-none absolute -right-4 top-10 h-40 w-72 rotate-[-20deg] rounded-[50%] border border-foreground/10" />
+            <div className="pointer-events-none absolute bottom-0 left-1/3 h-32 w-32 rounded-full border border-primary/10" />
             <div className="flex items-center justify-between">
               <p className="text-sm text-muted-foreground">Saldo disponível</p>
               <button onClick={() => update((x) => ({ ...x, hideValues: !x.hideValues }))} aria-label={hide ? "Mostrar valores" : "Ocultar valores"} className="grid h-9 w-9 place-items-center rounded-full bg-background/30 hover:bg-background/50">
@@ -77,6 +85,16 @@ function Dashboard() {
                 <p className="flex items-center gap-1.5 text-xs text-muted-foreground"><ArrowUpRight className="h-3.5 w-3.5 text-negative" />Despesas (30 dias)</p>
                 <p className="tabular mt-1 font-semibold">{masked(s.expenses, hide)}</p>
               </div>
+            </div>
+
+            {/* Quick actions */}
+            <div className="mt-4 grid grid-cols-4 gap-2">
+              {QUICK_ACTIONS.map(({ to, label, Icon, color }) => (
+                <Link key={to} to={to} className="flex flex-col items-center gap-1.5 rounded-2xl bg-background/20 p-2.5 text-center transition hover:bg-background/40 active:scale-95">
+                  <Icon className={cn("h-5 w-5", color)} />
+                  <span className="text-[10px] font-medium text-foreground/80">{label}</span>
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -168,7 +186,7 @@ function Dashboard() {
                 </div>
                 <Progress value={financialProgress(j)} tone="reward" className="mt-2" />
                 <p className="mt-3 text-xs text-muted-foreground">Próxima etapa: {j.missions.find((m) => m.main && !state.completedMissions.includes(m.id))?.title ?? "Sonho conquistado!"}</p>
-                <Link to="/sonhos" className={cn(btn({ variant: "secondary", size: "sm" }), "mt-4 w-full")}>Ver minha jornada</Link>
+                <Link to="/sonhos" className={cn(btn({ variant: "secondary", size: "sm" }), "mt-4 w-full")}>Ver minha jornada <ChevronRight className="h-4 w-4" /></Link>
               </>
             ) : (
               <>
@@ -184,6 +202,9 @@ function Dashboard() {
           <Card className="p-3">
             <div className="px-2 pt-2"><SectionTitle title="Movimentações recentes" action={<Link to="/movimentacoes" className="flex items-center text-sm font-semibold text-primary">Ver todas<ChevronRight className="h-4 w-4" /></Link>} /></div>
             {state.transactions.slice(0, 5).map((t) => <TxRow key={t.id} t={t} hide={hide} />)}
+            {state.transactions.length === 0 && (
+              <p className="px-2 py-4 text-center text-sm text-muted-foreground">Nenhuma movimentação ainda.<br />Comece registrando uma.</p>
+            )}
           </Card>
         </div>
       </div>
