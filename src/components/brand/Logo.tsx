@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
+import logo from "../../../public/favicon.ico";
 
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <img src="../../../public/favicon.ico" className="h-8 w-8"/>
+    <img src={logo} className="h-8 w-8"/>
   );
 }
 
