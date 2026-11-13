@@ -7,7 +7,7 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { DreamConfig, IdleState } from "./types";
-import { activeStage } from "./engine";
+import { activeStage, pctInt } from "./engine";
 import { HouseScene } from "./scenes/HouseScene";
 import { CarScene } from "./scenes/CarScene";
 
@@ -44,6 +44,7 @@ export function SceneContainer({ config, idleState, celebrating, className }: Pr
             stageIndex={stage.index}
             unlockedSlots={unlockedSlots}
             celebrating={celebrating}
+            pct={pctInt(idleState)}
           />
         ) : (
           <CarScene

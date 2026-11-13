@@ -177,7 +177,14 @@
   100% { opacity: 0; }
 }
 
+@keyframes idle-cloud {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(12px); }
+  100% { transform: translateX(0); }
+}
+
 .idle-sway { animation: idle-sway 3s ease-in-out infinite; transform-origin: bottom center; }
+.idle-cloud { animation: idle-cloud 18s ease-in-out infinite; }
 .idle-bounce { animation: idle-bounce 2s ease-in-out infinite; }
 .idle-smoke { animation: idle-smoke 2.5s ease-out infinite; }
 .idle-celebrate { animation: idle-celebrate 1s ease-in-out infinite; }
